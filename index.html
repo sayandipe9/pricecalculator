@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Routing Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="styles.css"> <!-- Link to an external CSS file for better organization -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.3.0/turf.min.js"></script>
+</head>
+<body>
+
+  
+    
+    <div class="container">
+        <form id="routing-form" style="
+        margin-bottom: 30px;
+    ">
+            <h1    style="margin-bottom: 4%;">Get Directions</h1>
+            <div class="form-group ">
+                <label for="start">Start Point:</label>
+                <input type="text" id="start" placeholder="Enter starting location" />
+            </div>
+            <div class="form-group">
+                <label for="destination">Destination:</label>
+                <input type="text" id="destination" placeholder="Enter destination" />
+            </div>
+            <button type="submit" style="    margin-right: 76%;     background: #69cd69; white-space: nowrap; ">Get Directions</button>
+        </form>
+
+        <div id="result-container"><h1>hello</h1></div>
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div id="polygon-form-container">
+            <h2>Add Polygon Details</h2>
+            <form id="polygon-form">
+                <div class="form-group">
+                    <label for="polygonName">Polygon Name:</label>
+                    <input type="text" id="polygonName" placeholder="Enter polygon name" />
+                </div>
+                <div class="form-group">
+                    <label for="polygonId">Polygon ID:</label>
+                    <input type="text" id="polygonId" placeholder="Enter polygon ID" />
+                </div>
+                <div class="form-group">
+                    <label for="priceSlabs">Price Slabs (Distance in Miles):</label>
+                    <table id="priceSlabsTable">
+                        <thead>
+                            <tr>
+                                <th>Distance (Miles)</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="number" placeholder="Distance" /></td>
+                                <td><input type="number" placeholder="Price" /></td>
+                                <td><button type="button" class="remove-row">Remove</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" id="addRow">Add Row</button>
+                </div>
+                
+                
+                <button type="submit" id="createPolygonButton">Add Polygon</button>
+            </form>
+        </div>
+        
+        <!-- <div class="button-container">
+            <button id="createPolygonButton" style="background-color: black;">Create Polygon</button>
+            <button id="removePolygonButton" style="    background: #ea0f0f;;">Remove Polygon</button>
+        </div> -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+    /* Reset some default styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply a background color to the body */
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Style the form */
+form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"] {
+    width: 96.5%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+button[type="submit"], #createPolygonButton, #removePolygonButton {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover, #createPolygonButton:hover, #removePolygonButton:hover {
+    background-color: #0056b3;
+}
+
+/* Style the map container */
+#map-container {
+    margin-bottom: 20px;
+}
+
+#map {
+    height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the button container */
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Style the "Create Polygon" and "Remove Polygon" buttons */
+#createPolygonButton, #removePolygonButton {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+/* Add more styles as needed */
+
+
+</style>
